@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class BaseSupply : MonoBehaviour
 {
+    [SerializeField] protected SupplyItemData supplyItemData;
     [SerializeField] protected int maxProductSpawn;
     [SerializeField] protected float delayProductSpawn;
-    [SerializeField] protected List<GameObject> listProducts = new List<GameObject>();
     [SerializeField] protected DOTweenAnimation tweenAnimation;
+    [SerializeField] protected List<Transform> spawnPoints = new List<Transform>();
 
     protected float _currentDelay = 0;
     protected int _currentProduct = 0;
     protected PlayerController _playerController;
     protected int redundant;
+    protected List<ProductItem> listProducts = new List<ProductItem>();
 
     private void Start()
     {
         _currentDelay = 0;
         _currentProduct = 0;
         redundant = 0;
-        SetActiveProducts();
     }
 
     private void Update()
@@ -33,8 +34,8 @@ public class BaseSupply : MonoBehaviour
             if (_currentDelay >= delayProductSpawn )
             {
                 _currentDelay = 0;
-                _currentProduct++;
-                SetActiveProducts();
+//_currentProduct++;
+                SpawnProduct();
             }
         }
         else
@@ -42,14 +43,24 @@ public class BaseSupply : MonoBehaviour
             tweenAnimation.tween.Pause();
         }
     }
-
-    public void SetActiveProducts()
+    public void SpawnProduct()
     {
-        for ( int i = 0; i < listProducts.Count; i++ )
+        var _productItem = SimplePool.Spawn(supplyItemData.itemPrefab, Vector3.zero, Quaternion.identity);
+        _productItem.transform.SetParent(spawnPoints[_currentProduct], false);
+        _productItem.transform.localPosition = Vector3.up * -2f;
+        _productItem.MoveToTarget(spawnPoints[_currentProduct].position,0.3f, () =>
         {
-            listProducts[i].gameObject.SetActive(i + 1 > _currentProduct ? false : true);
-        }
+            _currentProduct++;
+            listProducts.Add(_productItem);
+        });
     }
+    //public void SetActiveProducts()
+    //{
+    //    if (_currentProduct > listProducts.Count)
+    //    {
+
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -57,12 +68,11 @@ public class BaseSupply : MonoBehaviour
         {
             _playerController = other.transform.parent.GetComponent<PlayerController>();
             if (_playerController != null)
-            {
-                
-                _playerController.AddProducts(_currentProduct, out redundant);
+            {               
+                _playerController.AddProducts(_currentProduct,listProducts, out redundant);
 
                 _currentProduct = redundant;
-                SetActiveProducts();
+                //SetActiveProducts();
             }
         }
     }
@@ -77,10 +87,10 @@ public class BaseSupply : MonoBehaviour
             }
             if (_playerController != null)
             {
-                _playerController.AddProducts(_currentProduct, out redundant);
+                _playerController.AddProducts(_currentProduct, listProducts, out redundant);
 
                 _currentProduct = redundant;
-                SetActiveProducts();
+               // SetActiveProducts();
             }
         }
     }

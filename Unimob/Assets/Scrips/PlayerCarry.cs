@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerCarry : MonoBehaviour
 {
     [SerializeField] private int maxProductsCarry;
-    [SerializeField] private GameObject productPrefab;
 
     private List<GameObject> products = new List<GameObject>();
     private int _currentProductsCarry = 0;
@@ -17,29 +16,39 @@ public class PlayerCarry : MonoBehaviour
         _currentProductsCarry = 0;
     }
 
-    public void AddProduct(int quantity, out int redundant)
+    public void AddProduct(int quantity, List<ProductItem> productItems, out int redundant)
     {
+        if (_currentProductsCarry > maxProductsCarry)
+        {
+            redundant = quantity;
+            return;
+        }
         if (_currentProductsCarry + quantity > maxProductsCarry)
         {
-            for (int i = _currentProductsCarry; i < maxProductsCarry; i++)
-            {
-                var _product = SimplePool.Spawn(productPrefab, Vector3.zero, Quaternion.identity);
-                _product.transform.SetParent(transform, false);
-                _product.transform.localPosition = Vector3.up * i * 0.335f;
-            }
             redundant = _currentProductsCarry + quantity - maxProductsCarry;
-            _currentProductsCarry = maxProductsCarry;
+            int temp = maxProductsCarry - _currentProductsCarry;
+            for (int i = 0; i < temp; i++)
+            {
+                var _product = productItems[productItems.Count - 1 - i];
+                _product.transform.SetParent(transform, false);
+                _product.MoveToLocalTarget(Vector3.up * _currentProductsCarry * 0.335f, 0.3f);
+                _currentProductsCarry++;
+                productItems.Remove(_product);
+            }
+          //  _currentProductsCarry = maxProductsCarry;
         }
         else
         {
-            int newProduct = _currentProductsCarry + quantity;
-            for (int i = _currentProductsCarry; i < newProduct; i++)
+            //int newProduct = _currentProductsCarry + quantity;
+            for (int i = 0; i < productItems.Count; i++)
             {
-                var _product = SimplePool.Spawn(productPrefab, Vector3.zero, Quaternion.identity);
+                var _product = productItems[i];
                 _product.transform.SetParent(transform, false);
-                _product.transform.localPosition = Vector3.up * i * 0.335f;
+                _product.MoveToLocalTarget(Vector3.up * _currentProductsCarry * 0.335f, 0.3f);
+                _currentProductsCarry++;
+                productItems.Remove(_product);
             }
-            _currentProductsCarry = newProduct;
+            //_currentProductsCarry = newProduct;
             redundant = 0;
         }
     }

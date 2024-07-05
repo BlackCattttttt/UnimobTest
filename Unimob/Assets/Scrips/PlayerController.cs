@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviour
 
         characterAnimator.SetBool(IsEmpty, _isEmpty);      
     }
-    public void AddProducts(int quantity, out int redundant)
+    public void AddProducts(int quantity, List<ProductItem> productItems, out int redundant)
     {
-        playerCarry.AddProduct(quantity, out redundant);
+        playerCarry.AddProduct(quantity, productItems, out redundant);
     }
 }
