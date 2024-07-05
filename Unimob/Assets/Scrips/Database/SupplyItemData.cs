@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum SupplyType
+public enum ProductType
 {
     Tomato
 }
@@ -11,7 +11,6 @@ public enum SupplyType
 public class SupplyItemData : ScriptableObject
 {
     public string supplyName;
-    public SupplyType type;
-    public int earn;
+    public ProductType type;
     public ProductItem itemPrefab;
 }

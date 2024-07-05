@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class ProductItem : MonoBehaviour
 {
-    [SerializeField] private SupplyType supplyType;
+    [SerializeField] private ProductType supplyType;
 
-    public SupplyType SupplyType { get => supplyType; }
+    public ProductType SupplyType { get => supplyType; }
 
     public void MoveToTarget(Vector3 target,float duration, Action onComplete = null)
     {

@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseCharacter
 {
     [SerializeField] private float speed = 5;
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private DynamicJoystick joystick;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Animator characterAnimator;
-    [SerializeField] private PlayerCarry playerCarry;
-
-    private static readonly int IsMove = Animator.StringToHash("IsMove");
-    private static readonly int IsCarryMove = Animator.StringToHash("IsCarryMove");
-    private static readonly int IsEmpty = Animator.StringToHash("IsEmpty");
+    [SerializeField] protected PlayerCarry playerCarry;
 
     private float _turnSmoothVelocity;
     private Transform _cameraTransform;
-    private bool _isEmpty;
 
     private void Awake()
     {
