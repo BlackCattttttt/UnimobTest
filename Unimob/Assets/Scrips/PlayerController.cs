@@ -59,4 +59,8 @@ public class PlayerController : MonoBehaviour
     {
         playerCarry.AddProduct(quantity, productItems, out redundant);
     }
+    public void RemoveProductsToStall(int capacity, out List<ProductItem> productItems)
+    {
+        playerCarry.RemoveProductsToStall(capacity, out productItems);
+    }
 }
