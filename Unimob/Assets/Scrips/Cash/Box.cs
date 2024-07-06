@@ -12,6 +12,8 @@ public class Box : MonoBehaviour
 
     private int _currentProduct;
     private CashRegister _cashRegister;
+    public bool boxFinish = false;
+
 
     protected static readonly int CloseTrigger = Animator.StringToHash("Close");
 
@@ -19,6 +21,7 @@ public class Box : MonoBehaviour
     {
         _cashRegister = cashRegister;   
         _currentProduct = 0;
+        boxFinish = false;
     }
     public void PlayCloseAnimation()
     {
@@ -47,5 +50,9 @@ public class Box : MonoBehaviour
         {
             onComplete?.Invoke();
         });
+    }
+    public void SetBoxFinish()
+    {
+        boxFinish = true;
     }
 }

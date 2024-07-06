@@ -30,18 +30,26 @@ public class CustomerCarry : MonoBehaviour
         _currentProductsCarry--;
         products.Remove(_product);
         last = _currentProductsCarry == 0 ? true : false;
-        
+
         return _product;
     }
     public void AddBox(Box box, Action onComplete = null)
     {
         box.transform.SetParent(transform, true);
-        box.MoveToLocalTarget(Vector3.up * 0, 0.3f, () => {
+        box.MoveToLocalTarget(Vector3.up * 0, 0.3f, () =>
+        {
             onComplete?.Invoke();
         });
     }
     public bool CheckEmpty()
     {
-        return transform.childCount > 0 ? false : true; 
+        return transform.childCount > 0 ? false : true;
+    }
+    public void Clear()
+    {
+        foreach (Transform item in transform)
+        {
+            Destroy(item.gameObject);
+        }
     }
 }

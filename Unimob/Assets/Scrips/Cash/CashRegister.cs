@@ -15,8 +15,7 @@ public class CashRegister : MonoBehaviour
     public List<CustomerSlotWait> CustomerSlotWaits { get { return customerSlotWaits; } set { customerSlotWaits = value; } }
 
     private bool _havePlayer;
-
-    public bool HavePlayer => _havePlayer;
+    public bool HavePlayer => _havePlayer && (_currentBox != null && _currentBox.boxFinish);
 
     public void SpawnBox(BaseCustomer currentCustomer)
     {
@@ -37,6 +36,7 @@ public class CashRegister : MonoBehaviour
         if (_currentCustomer != null)
         {
             _currentCustomer.AddBox(_currentBox);
+            _currentBox = null;
         }
     }
     private void OnTriggerEnter(Collider other)

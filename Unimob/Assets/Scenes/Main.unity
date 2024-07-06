@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   productDatabase: {fileID: 11400000, guid: 4f8cc3b22b078ab41b6e9dfdafbd86fd, type: 2}
-  maxCustomer: 5
+  maxCustomer: 4
   customerSpawner: {fileID: 434566810}
   baseStalls:
   - {fileID: 1649086622}

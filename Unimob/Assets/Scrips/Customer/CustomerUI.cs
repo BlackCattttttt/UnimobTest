@@ -10,6 +10,7 @@ public class CustomerUI : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image cashierIcon;
+    [SerializeField] private Image emojiIcon;
 
     private int _quantity;
 
@@ -17,6 +18,7 @@ public class CustomerUI : MonoBehaviour
     {
         orderPanel.gameObject.SetActive(true);
         cashierIcon.gameObject.SetActive(false);
+        emojiIcon.gameObject.SetActive(false);
         iconImage.sprite = icon;
         _quantity = quantity;
         quantityText.text = "0/" + quantity.ToString();
@@ -29,6 +31,13 @@ public class CustomerUI : MonoBehaviour
     public void SetCashierActive()
     {
         orderPanel.gameObject.SetActive(false);
+        emojiIcon.gameObject.SetActive(false);
         cashierIcon.gameObject.SetActive(true);
+    }
+    public void SetEmojiActive()
+    {
+        orderPanel.gameObject.SetActive(false);
+        emojiIcon.gameObject.SetActive(true);
+        cashierIcon.gameObject.SetActive(false);
     }
 }

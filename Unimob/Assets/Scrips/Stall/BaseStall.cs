@@ -84,4 +84,8 @@ public class BaseStall : MonoBehaviour
     {
         customers.Add(customer);
     }
+    public void RemoveCustomer(BaseCustomer customer)
+    {
+        customers.Remove(customer);
+    }
 }

@@ -104,4 +104,12 @@ public class BaseStore : MonoBehaviour
         }
         return null;
     }
+    public void CustomerGotoDespawn(BaseCustomer customer)
+    {
+        customer.Target = customerSpawner.transform;
+    }
+    public void DeSpawn()
+    {
+        currentCustomer--;
+    }
 }

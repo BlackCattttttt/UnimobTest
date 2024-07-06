@@ -1,6 +1,7 @@
 using NodeCanvas.BehaviourTrees;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BaseCustomer : BaseCharacter
@@ -20,7 +21,7 @@ public class BaseCustomer : BaseCharacter
     [SerializeField] private float damping = 6;
     [SerializeField] private float delayPay = 0.3f;
 
-    public Transform Target { get; protected set; }
+    public Transform Target { get; set; }
     private Transform lookAtTargetTrans;
     private FoodOrderData _orderData;
     private BaseStore _store;
@@ -30,10 +31,15 @@ public class BaseCustomer : BaseCharacter
     private float _delayPay = 0;
     private bool lookAtTarget;
     private bool canPay = false;
+    private bool finishPay = false;
 
     private void OnEnable()
     {
+        characterAnimator.transform.localPosition = Vector3.zero;
         canPay = false;
+        finishPay = false;
+        customerCarry.Clear();
+        _isEmpty = true;
     }
 
     private void Update()
@@ -115,9 +121,7 @@ public class BaseCustomer : BaseCharacter
     }
     public bool CheckFinishPay()
     {
-        if (customerCarry.CurrentProductsCarry == 0)
-            return true;
-        return false;
+        return finishPay;
     }
     public void ReceiveOrder(ProductItem product)
     {
@@ -132,6 +136,8 @@ public class BaseCustomer : BaseCharacter
         {
             lookAtTarget = false;
             Target = _currentSlotWait.transform;
+            _currentSlot.SetSlotState(SlotState.Free);
+            _currentSlot.Stall.RemoveCustomer(this);
             _cashRegister = _currentSlotWait.CashRegister;
             _currentSlotWait.SetSlotState(SlotState.Close);
             customerUI.SetCashierActive();
@@ -164,9 +170,10 @@ public class BaseCustomer : BaseCharacter
     }
     public void GoToNextWaitSlot()
     {
-        lookAtTargetTrans = _currentSlotWait.LookAtTransform;
         if (!_currentSlotWait.FirstSlot)
             _currentSlotWait = _currentSlotWait.NextSlotWait;
+
+        lookAtTargetTrans = _currentSlotWait.LookAtTransform;
     }
     public void GotoWaitSlot()
     {
@@ -184,7 +191,18 @@ public class BaseCustomer : BaseCharacter
     {
         customerCarry.AddBox(box, () =>
         {
-
+            finishPay = true;
+            customerUI.SetEmojiActive();
         });
+    }
+    public void GoToDespawn()
+    {
+        _currentSlotWait.SetSlotState(SlotState.Free);
+        _store.CustomerGotoDespawn(this);
+    }
+    public void Despawn()
+    {
+        _store.DeSpawn();
+        SimplePool.Despawn(gameObject);
     }
 }
