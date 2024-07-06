@@ -3,25 +3,23 @@ using ParadoxNotion;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace MainGame.Scripts.IdleGame.BehaviourTree.Actions
+
+[Category("✫ Utility")]
+public class WaitUntilReceiveOrder : ActionTask
 {
-    [Category("✫ Utility")]
-    public class WaitUntilReceiveOrder : ActionTask
+    public BBParameter<BaseCustomer> Customer;
+    public CompactStatus finishStatus = CompactStatus.Success;
+
+    protected override string info
     {
-        public BBParameter<BaseCustomer> Customer;
-        public CompactStatus finishStatus = CompactStatus.Success;
+        get { return string.Format("Wait receive order."); }
+    }
 
-        protected override string info
+    protected override void OnUpdate()
+    {
+        if (!Customer.value.CheckHasOrder())
         {
-            get { return string.Format("Wait receive order."); }
-        }
-
-        protected override void OnUpdate()
-        {
-            if (!Customer.value.CheckHasOrder())
-            {
-                EndAction(finishStatus == CompactStatus.Success ? true : false);
-            }
+            EndAction(finishStatus == CompactStatus.Success ? true : false);
         }
     }
 }

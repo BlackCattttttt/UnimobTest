@@ -5,75 +5,72 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace MainGame.Scripts.IdleGame.BehaviourTree.Actions
+[Name("Seek")]
+[Category("Movement/Pathfinding")]
+public class MoveToTarget : ActionTask<NavMeshAgent>
 {
-    [Name("Seek")]
-    [Category("Movement/Pathfinding")]
-    public class MoveToTarget : ActionTask<NavMeshAgent>
+    [RequiredField]
+    public BBParameter<GameObject> target;
+    public BBParameter<float> speed = 4;
+    public BBParameter<float> keepDistance = 0.1f;
+    public bool waitActionFinish = true;
+
+    private Vector3? lastRequest;
+
+    protected override string info
     {
-        [RequiredField]
-        public BBParameter<GameObject> target;
-        public BBParameter<float> speed = 4;
-        public BBParameter<float> keepDistance = 0.1f;
-        public bool waitActionFinish = true;
+        get { return "Seek " + target; }
+    }
 
-        private Vector3? lastRequest;
-
-        protected override string info
+    protected override void OnExecute()
+    {
+        if (target.value == null) { EndAction(false); return; }
+        agent.speed = speed.value;
+        if (Vector3.Distance(agent.transform.position, target.value.transform.position) <= keepDistance.value)
         {
-            get { return "Seek " + target; }
+            EndAction(true);
+            return;
+        }
+    }
+
+    protected override void OnUpdate()
+    {
+        if (target.value == null) { EndAction(false); return; }
+        agent.speed = speed.value;
+        var pos = target.value.transform.position;
+        if (lastRequest != pos)
+        {
+            agent.destination = pos;
         }
 
-        protected override void OnExecute()
+        lastRequest = pos;
+
+        if (Vector3.Distance(agent.transform.position, target.value.transform.position) <= keepDistance.value)
         {
-            if (target.value == null) { EndAction(false); return; }
-            agent.speed = speed.value;
-            if (Vector3.Distance(agent.transform.position, target.value.transform.position) <= keepDistance.value)
-            {
-                EndAction(true);
-                return;
-            }
+            EndAction(true);
         }
 
-        protected override void OnUpdate()
+        if (!waitActionFinish)
         {
-            if (target.value == null) { EndAction(false); return; }
-            agent.speed = speed.value;
-            var pos = target.value.transform.position;
-            if (lastRequest != pos)
-            {
-                agent.destination = pos;
-            }
-
-            lastRequest = pos;
-
-            if (Vector3.Distance(agent.transform.position, target.value.transform.position) <= keepDistance.value)
-            {
-                EndAction(true);
-            }
-
-            if (!waitActionFinish)
-            {
-                EndAction(false);
-            }
+            EndAction(false);
         }
+    }
 
-        protected override void OnPause() { OnStop(); }
-        protected override void OnStop()
-        {
-            //if (agent.gameObject.activeSelf)
-            //{
-            //    agent.CalculatePath();
-            //}
-            lastRequest = null;
-        }
+    protected override void OnPause() { OnStop(); }
+    protected override void OnStop()
+    {
+        //if (agent.gameObject.activeSelf)
+        //{
+        //    agent.CalculatePath();
+        //}
+        lastRequest = null;
+    }
 
-        public override void OnDrawGizmosSelected()
+    public override void OnDrawGizmosSelected()
+    {
+        if (target.value != null)
         {
-            if (target.value != null)
-            {
-                Gizmos.DrawWireSphere(target.value.transform.position, keepDistance.value);
-            }
+            Gizmos.DrawWireSphere(target.value.transform.position, keepDistance.value);
         }
     }
 }

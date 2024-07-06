@@ -28,6 +28,7 @@ public class PlayerController : BaseCharacter
             _isEmpty = true;
         }
 
+        characterAnimator.SetBool(IsEmpty, _isEmpty);
         var direction = new Vector3(joystick.Horizontal, 0f, joystick.Vertical).normalized;
         var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraTransform.eulerAngles.y;
 
@@ -45,8 +46,7 @@ public class PlayerController : BaseCharacter
         {
             characterAnimator.SetBool(_isEmpty ? IsMove : IsCarryMove, false);
         }
-
-        characterAnimator.SetBool(IsEmpty, _isEmpty);      
+  
     }
     public void AddProducts(int quantity, List<ProductItem> productItems, out int redundant)
     {

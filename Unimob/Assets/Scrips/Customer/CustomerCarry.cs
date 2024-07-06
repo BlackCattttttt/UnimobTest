@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -17,5 +18,30 @@ public class CustomerCarry : MonoBehaviour
         _currentProductsCarry++;
 
         products.Add(productItem);
+    }
+    public ProductItem RemoveProduct(out bool last)
+    {
+        if (_currentProductsCarry == 0)
+        {
+            last = false;
+            return null;
+        }
+        var _product = products[_currentProductsCarry - 1];
+        _currentProductsCarry--;
+        products.Remove(_product);
+        last = _currentProductsCarry == 0 ? true : false;
+        
+        return _product;
+    }
+    public void AddBox(Box box, Action onComplete = null)
+    {
+        box.transform.SetParent(transform, true);
+        box.MoveToLocalTarget(Vector3.up * 0, 0.3f, () => {
+            onComplete?.Invoke();
+        });
+    }
+    public bool CheckEmpty()
+    {
+        return transform.childCount > 0 ? false : true; 
     }
 }

@@ -9,6 +9,7 @@ public class BaseStore : MonoBehaviour
     [SerializeField] private int maxCustomer = 4;
     [SerializeField] private CustomerSpawner customerSpawner;
     [SerializeField] private List<BaseStall> baseStalls = new List<BaseStall>();
+    [SerializeField] private List<CashRegister> cashRegisters = new List<CashRegister>();
 
     protected Dictionary<ProductType, List<BaseSlotCustomer>> slots = new();
     protected List<ProductType> listProductUnlock = new List<ProductType>();
@@ -73,7 +74,8 @@ public class BaseStore : MonoBehaviour
         {
             productType = _type,
             productIcon = productDatabase.GetProductIcon(_type),
-            quantity = Random.Range(1, 5)
+            quantity = Random.Range(1, 5),
+            count = 0
         };
     }
     public BaseSlotCustomer GetBaseSlotCustomerFree()
@@ -84,6 +86,20 @@ public class BaseStore : MonoBehaviour
             {
                 if (item[i].GetSlotState() == SlotState.Free)
                     return item[i];
+            }
+        }
+        return null;
+    }
+
+    public CustomerSlotWait GetCustomerSlotWaitCash()
+    {
+        for (int i = 0;i< cashRegisters.Count; i++)
+        {
+            var _customerSlotWaits = cashRegisters[i].CustomerSlotWaits;
+            for (int j = 0; j < _customerSlotWaits.Count; j++)
+            {
+                if (_customerSlotWaits[j].GetSlotState() == SlotState.Free)
+                    return _customerSlotWaits[j];
             }
         }
         return null;
