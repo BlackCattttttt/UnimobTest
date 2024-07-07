@@ -9,6 +9,7 @@ public class PlayerController : BaseCharacter
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private DynamicJoystick joystick;
     [SerializeField] protected PlayerCarry playerCarry;
+    [SerializeField] private Money moneyPrefab;
 
     private float _turnSmoothVelocity;
     private Transform _cameraTransform;
@@ -64,5 +65,12 @@ public class PlayerController : BaseCharacter
             GameManager.Instance.AddMoney(1);
             Destroy(money.gameObject);
         });
+    }
+    public Money SpendMoney()
+    {
+        var _money = SimplePool.Spawn(moneyPrefab, Vector3.zero, Quaternion.identity);
+        _money.transform.SetParent(playerCarry.transform, false);
+
+        return _money;
     }
 }

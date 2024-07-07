@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7239402082755407658}
   - component: {fileID: 7714091001315917779}
   - component: {fileID: 5942942257813161381}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4795639979685285246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cap2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 3971451300453696702}
   - component: {fileID: 3874151155188898960}
   - component: {fileID: 7508895635037915090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   - {x: -0.002, y: 0, z: 0.002}
   - {x: 0.002, y: 0, z: 0.002}
   - {x: -0.002, y: 0, z: -0.002}
-  - {x: -0.002, y: 0, z: 0.002}
+  - {x: 0.002, y: 0, z: -0.002}
   boxFinish: 0
 --- !u!95 &3971451300453696702
 Animator:
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 1144715296621920896}
   - component: {fileID: 7246859230046594848}
   - component: {fileID: 1803733954336860378}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 5532134895269796925}
   - component: {fileID: 2124446114442139291}
   - component: {fileID: 5172731162435092453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5482473332907086694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cap4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4369335813641849203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cap3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2225138904269719252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cap1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7705492027951049141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 4551180644988458089}
   - component: {fileID: 3232378274990317437}
   - component: {fileID: 4285122434548794365}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}

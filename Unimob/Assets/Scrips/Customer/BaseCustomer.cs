@@ -201,7 +201,7 @@ public class BaseCustomer : BaseCharacter
             var _money = SimplePool.Spawn(moneyPrefab, Vector3.zero, Quaternion.identity);
             _money.transform.SetParent(customerCarry.transform, false);
             _cashRegister.AddMoney(_money);
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.1f);
         }
         finishPay = true;
     }

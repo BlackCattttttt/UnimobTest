@@ -73,6 +73,10 @@ PrefabInstance:
       value: Tomato_03
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f560bab9c0ba348eeb888d31e9a955ce, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f560bab9c0ba348eeb888d31e9a955ce, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -101,3 +105,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d446606d2cbac2344897d7a3014ca90b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  supplyType: 0

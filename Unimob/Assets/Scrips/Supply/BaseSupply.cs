@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseSupply : MonoBehaviour
+public class BaseSupply : BaseBuilding
 {
     [SerializeField] protected SupplyItemData supplyItemData;
     [SerializeField] protected int maxProductSpawn;
@@ -93,5 +93,10 @@ public class BaseSupply : MonoBehaviour
                // SetActiveProducts();
             }
         }
+    }
+
+    public override void ActiveBuiling()
+    {
+        gameObject.SetActive(true); 
     }
 }

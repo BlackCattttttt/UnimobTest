@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using static BaseCustomer;
 
-public class BaseStore : MonoBehaviour
+public class BaseStore : Singleton<BaseStore>
 {
     [SerializeField] private ProductDatabase productDatabase;
     [SerializeField] private int maxCustomer = 4;
@@ -40,7 +41,13 @@ public class BaseStore : MonoBehaviour
             }
         }
     }
-
+    public void AddStall(BaseStall stall)
+    {
+       // navMeshSurface.BuildNavMesh();
+        baseStalls.Add(stall);
+        UpdateSlotsStall();
+        UpdateSupplyUnlock();
+    }
     public void UpdateSlotsStall()
     {
         slots.Clear();

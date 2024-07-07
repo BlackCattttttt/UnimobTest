@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseStall : MonoBehaviour
+public class BaseStall : BaseBuilding
 {
     [SerializeField] private ProductType supplyType;
     [SerializeField] private int row;
@@ -87,5 +87,10 @@ public class BaseStall : MonoBehaviour
     public void RemoveCustomer(BaseCustomer customer)
     {
         customers.Remove(customer);
+    }
+    public override void ActiveBuiling()
+    {
+        gameObject.SetActive(true);
+        BaseStore.Instance.AddStall(this);
     }
 }
