@@ -69,13 +69,15 @@ public class BaseStore : MonoBehaviour
     }
     public FoodOrderData GenerateOrderData(ProductType _type)
     {
-       // ProductType _type = listProductUnlock[Random.Range(0, listProductUnlock.Count)];
+        var productItemData = productDatabase.GetProductItemData(_type);
+        int quantity = Random.Range(1, 5);
         return new FoodOrderData
         {
             productType = _type,
-            productIcon = productDatabase.GetProductIcon(_type),
-            quantity = Random.Range(1, 5),
-            count = 0
+            productIcon = productItemData.productIcon,
+            quantity = quantity,
+            count = 0,
+            earn = quantity * productItemData.earn
         };
     }
     public BaseSlotCustomer GetBaseSlotCustomerFree()

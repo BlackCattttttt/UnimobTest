@@ -56,4 +56,13 @@ public class PlayerController : BaseCharacter
     {
         playerCarry.RemoveProductsToStall(capacity, out productItems);
     }
+    public void AddMoney(Money money)
+    {
+        money.transform.SetParent(playerCarry.transform, true);
+        money.MoveToLocalTarget(Vector3.zero, 0.3f, () =>
+        {
+            GameManager.Instance.AddMoney(1);
+            Destroy(money.gameObject);
+        });
+    }
 }

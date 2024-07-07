@@ -9,14 +9,36 @@ public class CashRegister : MonoBehaviour
     [SerializeField] private List<CustomerSlotWait> customerSlotWaits = new List<CustomerSlotWait>();
     [SerializeField] private Transform boxPoint;
     [SerializeField] private Box boxPrefab;
+    [SerializeField] private Transform moneyPoint; 
+    [SerializeField] private float delayPay = 0.3f;
 
     private Box _currentBox;
     private BaseCustomer _currentCustomer;
+    private int _currentMoney = 0;
+    private List<Money> _moneyList = new List<Money>();
+    private float _delayPay = 0;
+    private PlayerController _playerController;
     public List<CustomerSlotWait> CustomerSlotWaits { get { return customerSlotWaits; } set { customerSlotWaits = value; } }
 
     private bool _havePlayer;
     public bool HavePlayer => _havePlayer && (_currentBox != null && _currentBox.boxFinish);
 
+    private void Update()
+    {
+        if (_havePlayer && _playerController != null)
+        {
+            _delayPay -= Time.deltaTime;
+            if (_delayPay < 0 && _moneyList.Count > 0)
+            {
+                _delayPay = delayPay;
+                var _money = _moneyList[_moneyList.Count - 1];
+                _playerController.AddMoney(_money);
+
+                _moneyList.Remove(_money);
+                _currentMoney--;
+            }
+        }
+    }
     public void SpawnBox(BaseCustomer currentCustomer)
     {
         _currentCustomer = currentCustomer;
@@ -39,15 +61,29 @@ public class CashRegister : MonoBehaviour
             _currentBox = null;
         }
     }
+
+    public void AddMoney(Money money)
+    {
+        money.transform.SetParent(moneyPoint, true);
+        money.transform.localEulerAngles = Vector3.zero;
+        money.MoveToLocalTarget(GetMoneyPosition(_currentMoney), 0.3f, () =>
+        {
+            _moneyList.Add(money);
+        });
+        _currentMoney++;
+    }
+    public Vector3 GetMoneyPosition(int index)
+    {
+        Vector3Int pos3Int = new Vector3Int(index % 10 / 5, index % 10 % 5, index / 10);
+        return new Vector3(moneyPoint.position.x * -pos3Int.y * 0.04f, moneyPoint.position.y * pos3Int.z * 0.1f, moneyPoint.position.z * -pos3Int.x * 0.35f);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             _havePlayer = true;
-            var _playerController = other.transform.parent.GetComponent<PlayerController>();
-            if (_playerController != null)
-            {
-            }
+             _playerController = other.transform.parent.GetComponent<PlayerController>();
+
         }
     }
 
@@ -56,10 +92,7 @@ public class CashRegister : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _havePlayer = false;
-            var _playerController = other.transform.parent.GetComponent<PlayerController>();
-            if (_playerController != null)
-            {
-            }
+            _playerController = null;
         }
     }
 }

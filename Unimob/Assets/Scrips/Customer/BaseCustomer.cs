@@ -1,7 +1,5 @@
 using NodeCanvas.BehaviourTrees;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BaseCustomer : BaseCharacter
@@ -18,6 +16,7 @@ public class BaseCustomer : BaseCharacter
     [SerializeField] private BehaviourTreeOwner behaviourTree;
     [SerializeField] private CustomerUI customerUI;
     [SerializeField] private CustomerCarry customerCarry;
+    [SerializeField] private Money moneyPrefab;
     [SerializeField] private float damping = 6;
     [SerializeField] private float delayPay = 0.3f;
 
@@ -191,9 +190,20 @@ public class BaseCustomer : BaseCharacter
     {
         customerCarry.AddBox(box, () =>
         {
-            finishPay = true;
+            StartCoroutine(SpawnMoney());
             customerUI.SetEmojiActive();
         });
+    }
+    IEnumerator SpawnMoney()
+    {
+        for (int i = 0;i< _orderData.earn; i++)
+        {
+            var _money = SimplePool.Spawn(moneyPrefab, Vector3.zero, Quaternion.identity);
+            _money.transform.SetParent(customerCarry.transform, false);
+            _cashRegister.AddMoney(_money);
+            yield return new WaitForSeconds(.3f);
+        }
+        finishPay = true;
     }
     public void GoToDespawn()
     {

@@ -9,6 +9,10 @@ public class ProductDatabase : ScriptableObject
 {
     public List<ProductItemData> datas = new List<ProductItemData>();
 
+    public ProductItemData GetProductItemData(ProductType productType)
+    {
+        return datas.Find(x => x.productType == productType);
+    }
     public Sprite GetProductIcon(ProductType productType)
     {
         return datas.Find(x => x.productType == productType).productIcon;

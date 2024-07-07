@@ -344,8 +344,9 @@ MonoBehaviour:
   behaviourTree: {fileID: 7094451122459325304}
   customerUI: {fileID: 698961124262384217}
   customerCarry: {fileID: 1779239611722957382}
+  moneyPrefab: {fileID: 1992174318555528344, guid: a47e05dea6f2c984aaae6bb8d2e5c7b0, type: 3}
   damping: 6
-  delayPay: 0.3
+  delayPay: 0.1
 --- !u!195 &5141249896578985957
 NavMeshAgent:
   m_ObjectHideFlags: 0
