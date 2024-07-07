@@ -49,6 +49,10 @@ public class PlayerController : BaseCharacter
         }
   
     }
+    public bool CheckProduct(ProductType productItem)
+    {
+        return playerCarry.CheckProduct(productItem);
+    }
     public void AddProducts(int quantity, List<ProductItem> productItems, out int redundant)
     {
         playerCarry.AddProduct(quantity, productItems, out redundant);

@@ -67,7 +67,7 @@ public class BaseSupply : BaseBuilding
         if (other.CompareTag("Player"))
         {
             _playerController = other.transform.parent.GetComponent<PlayerController>();
-            if (_playerController != null)
+            if (_playerController != null && _playerController.CheckProduct(supplyItemData.type))
             {               
                 _playerController.AddProducts(_currentProduct,listProducts, out redundant);
 
@@ -85,7 +85,7 @@ public class BaseSupply : BaseBuilding
             {
                 _playerController = other.transform.parent.GetComponent<PlayerController>();
             }
-            if (_playerController != null)
+            if (_playerController.CheckProduct(supplyItemData.type))
             {
                 _playerController.AddProducts(_currentProduct, listProducts, out redundant);
 

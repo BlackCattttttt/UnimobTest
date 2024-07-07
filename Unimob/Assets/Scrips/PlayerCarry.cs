@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCarry : MonoBehaviour
 {
     [SerializeField] private int maxProductsCarry;
+    [SerializeField] private RectTransform canvas;
 
     private List<ProductItem> products = new List<ProductItem>();
     private int _currentProductsCarry = 0;
@@ -15,7 +16,12 @@ public class PlayerCarry : MonoBehaviour
     {
         _currentProductsCarry = 0;
     }
-
+    public bool CheckProduct(ProductType productItem)
+    {
+        if (_currentProductsCarry == 0)
+            return true;
+        return products[0].SupplyType == productItem;
+    }
     public void AddProduct(int quantity, List<ProductItem> productItems, out int redundant)
     {
         if (_currentProductsCarry > maxProductsCarry)
@@ -56,6 +62,8 @@ public class PlayerCarry : MonoBehaviour
             //_currentProductsCarry = newProduct;
             redundant = 0;
         }
+
+        canvas.gameObject.SetActive(_currentProductsCarry == maxProductsCarry);
     }
     public void RemoveProductsToStall(int capacity, out List<ProductItem> productItems)
     {
@@ -79,5 +87,6 @@ public class PlayerCarry : MonoBehaviour
             }
             _currentProductsCarry -= capacity;
         }
+        canvas.gameObject.SetActive(_currentProductsCarry == maxProductsCarry);
     }
 }

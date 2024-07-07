@@ -42,7 +42,7 @@ public class BaseStall : BaseBuilding
         if (other.CompareTag("Player"))
         {
             var _playerController = other.transform.parent.GetComponent<PlayerController>();
-            if (_playerController != null)
+            if (_playerController != null && _playerController.CheckProduct(supplyType))
             {
                 List<ProductItem> products = new List<ProductItem>();
                 _playerController.RemoveProductsToStall(MaxProduct - _currentProduct, out products);

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum ProductType
 {
-    Tomato
+    Tomato,
+    Banana
 }
 
 [CreateAssetMenu(menuName = "ScriptableObject/SupplyItemData", fileName = "SupplyItemData.asset")]

@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-       // Money = 0;
+        Money = 0;
         moneyText.text = Money.ToString();
     }
 
