@@ -11,6 +11,7 @@ public class UnlockBuilding : MonoBehaviour
     [SerializeField] private BaseBuilding building;
     [SerializeField] private Transform body;
     [SerializeField] private TMP_Text costText;
+    [SerializeField] private ParticleSystem hitParticle;
 
     private float _delayPay = 0;
     private int _amount = 0;   
@@ -45,6 +46,10 @@ public class UnlockBuilding : MonoBehaviour
         }
         if (_amount >= cost)
         {
+            if (hitParticle != null)
+            {
+                SimplePool.Spawn(hitParticle, transform.position, Quaternion.identity);
+            }
             building.ActiveBuiling();
             gameObject.SetActive(false);
         }

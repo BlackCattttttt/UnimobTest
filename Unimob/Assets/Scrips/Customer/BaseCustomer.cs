@@ -35,6 +35,7 @@ public class BaseCustomer : BaseCharacter
     private void OnEnable()
     {
         characterAnimator.transform.localPosition = Vector3.zero;
+        characterAnimator.transform.localEulerAngles = Vector3.zero;
         canPay = false;
         finishPay = false;
         customerCarry.Clear();
